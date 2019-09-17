@@ -41,3 +41,4 @@ There is a catch for improper commands that returns a readout of whatever is cur
 
 ## Screenshot
 Below is a screenshot outlining the 3 basic calls, and the default case of nothing being entered in. 
+![Image of LiriBot in action](./images/Capture.png)

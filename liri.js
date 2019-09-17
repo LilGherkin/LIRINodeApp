@@ -17,12 +17,10 @@ var OMDBQuery = "http://www.omdbapi.com/?t=" + Query + "&y=&plot=short&apikey=tr
 //API Request URL for BandsInTown.
 var BandTownQuery = "https://rest.bandsintown.com/artists/" + Query + "/events?app_id=codingbootcamp"
 
-//Debugging
-console.log(Request);
-console.log(Query);
+
 
 //Function that handles a concert-this command.
-function ConcertThis(Query) {
+    function ConcertThis(Query) {
     axios.get(BandTownQuery).then(
         function(response) {
             //Condition to check if the band exists, but nothing is scheduled.
@@ -139,35 +137,30 @@ function MovieThis(Query) {
 };
 
 function DoWhatItSays() {
-    fs.readFile("random.txt", "utf8", function (error, data) {
-
-        if (error) {
-            return console.log(error);
+    fs.readFile("random.txt", "utf8", (err, data)=>{
+        if (err) {
+            console.log(err.message);
+        } else {
+            console.log(data);
+            var SplitRandom = data.split(",")
+            console.log(SplitRandom);
+                if (SplitRandom[0] === "concert-this") {
+                    Query = SplitRandom[1];
+                    ConcertThis();
+                }
+                else if (SplitRandom[0] === "spotify-this") {
+                    Query = SplitRandom[1];
+                    SpotifyThisSong();
+                }
+                else if (SplitRandom[0] === "movie-this") {
+                    Query = SplitRandom[1];
+                    MovieThis();
+                } else {
+                    console.log("I don't know what to tell you.")
+                }
         }
-        var dataArr = data.split(",");
-
-        for (var z = 0; z < dataArr.length; z++) {
-            process.argv.push(dataArr[z]);
-        }
-        process.argv.splice(2, 1);
-
-        nodeArgs = process.argv;
-        // console.log(nodeArgs);
-
-
-        method = process.argv[2];
-        userQuery = "";
-        for (var i = 3; i < nodeArgs.length; i++) {
-
-            if (i > 3 && i < nodeArgs.length) {
-                userQuery = userQuery + "+" + nodeArgs[i];
-            } else {
-                userQuery += nodeArgs[i];
-
-            };
-        };
     });
-};
+}
 
 if (Request === "concert-this") {
     ConcertThis(Query);

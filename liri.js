@@ -6,6 +6,7 @@ var axios = require("axios");
 var moment = require("moment");
 var Spotify = require("node-spotify-api");
 var spotify = new Spotify(keys.spotify);
+var fs = require("fs");
 
 //Takes in the first thing they type as the aciton they want to perform with LIRI.
 var Request = process.argv[2];
@@ -53,9 +54,11 @@ function ConcertThis(Query) {
 };
 
 function SpotifyThisSong() {
+    //Default to Ace Of Bass if they don't search for anything. 
     if (Query == ""){
         //This grabs the 4th item in the search for The Sign because that's the one by Ace of Bass. Could be improved to a for loop to correct for when it's no longer the 5th item in the list. 
         spotify.search({ type: 'track', query: 'the sign', limit: 5 }, function(err, data) {
+           //Part of the default search. I figured I'd leave it in here so it can tell the user that Spotify is down even though it links to only one song that should be there. 
             if (err) {
                 return console.log('Error occurred: ' + err);
             } else {
@@ -136,7 +139,34 @@ function MovieThis(Query) {
 };
 
 function DoWhatItSays() {
+    fs.readFile("random.txt", "utf8", function (error, data) {
 
+        if (error) {
+            return console.log(error);
+        }
+        var dataArr = data.split(",");
+
+        for (var z = 0; z < dataArr.length; z++) {
+            process.argv.push(dataArr[z]);
+        }
+        process.argv.splice(2, 1);
+
+        nodeArgs = process.argv;
+        // console.log(nodeArgs);
+
+
+        method = process.argv[2];
+        userQuery = "";
+        for (var i = 3; i < nodeArgs.length; i++) {
+
+            if (i > 3 && i < nodeArgs.length) {
+                userQuery = userQuery + "+" + nodeArgs[i];
+            } else {
+                userQuery += nodeArgs[i];
+
+            };
+        };
+    });
 };
 
 if (Request === "concert-this") {

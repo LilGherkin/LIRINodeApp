@@ -40,5 +40,5 @@ Concert-this takes in a band's name, and returns:
 There is a catch for improper commands that returns a readout of whatever is currently in the random.txt file. It is currenlty set to run a search on the Spotify-This command for "I Want It That Way". If you type in a valid command but no actual query it defaults to Mr. Nobody for movie-this. and Ace of Bass' The Sign for spotify-this. If no result is returnd on concert it indicates that there is no upcoming perfromance, or the band you're looking for isn't within their system. 
 
 ## Screenshot
-Below is a screenshot outlining the 3 basic calls, and the default case of nothing being entered in. 
+Below is a screenshot outlining the 3 basic calls, and the default case of nothing (or gibberish) being entered in. 
 ![Image of LiriBot in action](https://github.com/LilGherkin/LIRINodeApp/blob/master/images/Capture.PNG?raw=true)

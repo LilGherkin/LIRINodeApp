@@ -76,8 +76,9 @@ function SpotifyThisSong() {
 
 //Function that grabs movie data from OMDB when initiated with "movie-this" for process.argv[2]. 
 function MovieThis(Query) {
-    //I dont' know the technicality but it needs to be == to check for no entry instead of ===. 
+    //I dont' know the technicality of it all but it needs to be == to check for no entry instead of ===. 
     if (Query == ""){
+        //If it was blank, return them the results of Mr. Nobody. 
         axios.get("http://www.omdbapi.com/?t=Mr+Nobody&y=&plot=short&apikey=trilogy").then(
             //If it worked, do the following. 
             function(response) {
@@ -135,15 +136,14 @@ function MovieThis(Query) {
             });
             }
 };
-
+//If you don't type a a valid command, this reads whatever is on random.txt and performs it. 
 function DoWhatItSays() {
     fs.readFile("random.txt", "utf8", (err, data)=>{
         if (err) {
             console.log(err.message);
         } else {
-            console.log(data);
+            console.log("You didn't input a valid command, so we're giving you song information based on our random.txt file. It's currently set for the Back Street Boys 'I want it that way'.");
             var SplitRandom = data.split(",")
-            console.log(SplitRandom);
                 if (SplitRandom[0] === "concert-this") {
                     Query = SplitRandom[1];
                     ConcertThis();
@@ -156,7 +156,7 @@ function DoWhatItSays() {
                     Query = SplitRandom[1];
                     MovieThis();
                 } else {
-                    console.log("I don't know what to tell you.")
+                    console.log("Forget what I said up there, whatever you entered in broke it completely. I don't know what to tell you.")
                 }
         }
     });
